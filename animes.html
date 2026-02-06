@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mes Animes - zebi</title>
+  <style>
+    :root {
+      --bg: #0f1724;
+      --card: #0b1220;
+      --accent: #4f46e5;
+      --text: #e6eef8;
+    }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, Arial;
+      background: linear-gradient(135deg, #071426 0%, #0b1220 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .site-title {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 24px;
+      font-weight: 900;
+      opacity: 0.7;
+    }
+
+    .card {
+      width: 90%;
+      max-width: 800px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+    }
+
+    h1 { margin: 0 0 10px; font-size: 24px; color: var(--accent); }
+    p { margin: 0 0 25px; color: #a5b4fc; }
+
+    .list-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .item {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 15px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.3s;
+    }
+    .item:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-back {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 14px;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+    .btn-back:hover { opacity: 1; }
+
+    .studio {
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="site-title">zebi</div>
+
+  <div class="card">
+    <a href="index.html" class="btn-back">← Retour à l'accueil</a>
+    
+    <h1>🎨 Mes Animes</h1>
+    <p>Ta liste d'animation japonaise.</p>
+
+    <div class="list-container">
+      <div class="item">
+        <span>One Piece</span>
+        <span class="studio">Toei Animation</span>
+      </div>
+      <div class="item">
+        <span>Jujutsu Kaisen</span>
+        <span class="studio">MAPPA</span>
+      </div>
+      <div class="item">
+        <span>Attack on Titan</span>
+        <span class="studio">Wit / MAPPA</span>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

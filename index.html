@@ -81,4 +81,141 @@
       cursor: pointer;
       transition: transform 0.1s, opacity 0.2s;
     }
-    button:
+    button:active { transform: scale(0.97); }
+    button:hover { opacity: 0.9; }
+
+    .error {
+      color: #ffa1a1;
+      font-size: 14px;
+      margin-top: 12px;
+      height: 18px;
+    }
+
+    .foot {
+      margin-top: 15px;
+      font-size: 12px;
+      color: #6366f1;
+      opacity: 0.8;
+    }
+
+    /* Contenu après connexion */
+    .content {
+      margin-top: 10px;
+      animation: fadeIn 0.5s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .box {
+      background: rgba(79, 70, 229, 0.1);
+      padding: 25px 10px;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      border: 1px solid rgba(79, 70, 229, 0.2);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .box:hover {
+      background: rgba(79, 70, 229, 0.2);
+      transform: translateY(-5px);
+      border-color: var(--accent);
+      box-shadow: 0 5px 15px rgba(79, 70, 229, 0.2);
+    }
+    .box h3 { margin: 0; font-size: 15px; font-weight: 500; }
+  </style>
+</head>
+<body>
+
+  <div class="site-title">zebi</div>
+
+  <div class="card">
+    <div id="login-section">
+      <h1>Espace Sécurisé</h1>
+      <p>Veuillez saisir votre mot de passe pour continuer.</p>
+      
+      <div class="input-group">
+        <input id="pw" type="password" placeholder="Mot de passe..." />
+        <button id="btn-valider">Accéder</button>
+      </div>
+      
+      <div id="err" class="error"></div>
+      <div class="foot">Note : Cet accès est strictement personnel.</div>
+    </div>
+
+    <div id="private-section" class="content hidden">
+      <h1>Bienvenue</h1>
+      <p>Choisissez une catégorie pour explorer vos contenus :</p>
+    
+      <div class="grid">
+  <a href="https://www.crunchyroll.com/fr" target="_blank" class="box-link">
+    <div class="box">
+      <h3>📺 Séries</h3>
+    </div>
+  </a>
+  <a href="https://www.netflix.com" target="_blank" class="box-link">
+    <div class="box">
+      <h3>🎬 Films</h3>
+    </div>
+  </a>
+  <a href="https://www.adn.fr" target="_blank" class="box-link">
+    <div class="box">
+      <h3>🎨 Animes</h3>
+    </div>
+  </a>
+</div>
+     
+
+  <script>
+    // Mot de passe actuel : 1234
+    const HASH_CIBLE = "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4";
+
+    async function crypter(texte) {
+      const encodeur = new TextEncoder().encode(texte);
+      const buffer = await crypto.subtle.digest('SHA-256', encodeur);
+      return Array.from(new Uint8Array(buffer))
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join('');
+    }
+
+    const input = document.getElementById('pw');
+    const btn = document.getElementById('btn-valider');
+    const msgErreur = document.getElementById('err');
+    const loginSec = document.getElementById('login-section');
+    const privateSec = document.getElementById('private-section');
+
+    async function verifier() {
+      msgErreur.textContent = "";
+      const mdp = input.value;
+      
+      if (!mdp) {
+        msgErreur.textContent = "Champ vide.";
+        return;
+      }
+
+      const hashSaisi = await crypter(mdp);
+      
+      if (hashSaisi === HASH_CIBLE) {
+        loginSec.classList.add('hidden');
+        privateSec.classList.remove('hidden');
+      } else {
+        msgErreur.textContent = "Mot de passe incorrect.";
+        input.value = "";
+      }
+    }
+
+    btn.addEventListener('click', verifier);
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') verifier();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+/* Variables globales */
+:root {
+  --bg: #0f1724;
+  --card: #0b1220;
+  --accent: #4f46e5;
+  --text: #e6eef8;
+}
+
+/* Style général du corps */
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, Arial, sans-serif;
+  background: linear-gradient(135deg, #071426 0%, #0b1220 100%);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Titre "zebi" en haut à droite */
+.site-title {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 24px;
+  font-weight: 900;
+  text-transform: lowercase;
+  opacity: 0.7;
+  letter-spacing: 1px;
+}
+
+/* Conteneur principal (la carte) */
+.card {
+  width: 90%;
+  max-width: 650px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+}
+
+h1 { margin: 0 0 10px; font-size: 22px; font-weight: 600; }
+p { margin: 0 0 20px; color: #a5b4fc; font-size: 15px; }
+
+.hidden { display: none; }
+
+/* Liens et Boutons */
+.box-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+button {
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: 0;
+  background: var(--accent);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s, opacity 0.2s;
+}
+
+button:active { transform: scale(0.97); }
+button:hover { opacity: 0.9; }
+
+/* Grille et Boîtes */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.box {
+  background: rgba(79, 70, 229, 0.1);
+  padding: 25px 10px;
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid rgba(79, 70, 229, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.box:hover {
+  background: rgba(79, 70, 229, 0.2);
+  transform: translateY(-5px);
+  border-color: var(--accent);
+}
+
+/* Listes dans les pages secondaires */
+.list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.item {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-back {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 14px;
+  opacity: 0.6;
+}

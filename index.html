@@ -1,5 +1,103 @@
-<div class="private-content">
-    <div class="box">Série</div>
-    <div class="box">Filme</div>
-    <div class="box">Anime</div>
-</div>
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mon espace privé</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#4f46e5;--text:#e6eef8}
+    body{margin:0;font-family:Inter, system-ui, Arial;background:linear-gradient(135deg,#071426 0%, #0b1220 100%);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center}
+    .card{width:95%;max-width:720px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:28px;border-radius:12px;box-shadow:0 8px 30px rgba(2,6,23,0.6)}
+    h1{margin:0 0 8px;font-size:20px}
+    p{margin:0 0 18px;color:#cde0ff}
+    .hidden{display:none}
+    .center{display:flex;gap:8px}
+    input[type="password"]{flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--text)}
+    button{padding:10px 14px;border-radius:8px;border:0;background:var(--accent);color:white;cursor:pointer}
+    .content{margin-top:16px;background:rgba(255,255,255,0.02);padding:14px;border-radius:8px}
+    .foot{margin-top:12px;font-size:12px;color:#93b0e6}
+    .error{color:#ff8a8a;margin-top:10px}
+    .boxes-container{display:grid;grid-template-columns:repeat(3, 1fr);gap:15px;margin-top:20px}
+    .box{background:rgba(79, 70, 229, 0.2);padding:20px;border-radius:8px;text-align:center;cursor:pointer;border:1px solid var(--accent);transition:all 0.3s}
+    .box:hover{background:rgba(79, 70, 229, 0.4);transform:scale(1.05)}
+    .box h3{margin:0;font-size:16px}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Espace privé</h1>
+    <p>Entrez le mot de passe pour accéder au contenu.</p>
+
+    <div id="login">
+      <div class="center">
+        <input id="pw" type="password" placeholder="Mot de passe" autocomplete="off" />
+        <button id="btn">Valider</button>
+      </div>
+      <div id="err" class="error" role="status" aria-live="polite"></div>
+      <div class="foot">Astuce : choisis un mot de passe solide et unique.</div>
+    </div>
+
+    <div id="privateContent" class="content hidden" aria-hidden="true">
+      <h2>Bienvenue !</h2>
+      <p>Ceci est ton espace privé — mets ici ce que tu veux garder pour toi.</p>
+      
+      <div class="boxes-container">
+        <div class="box">
+          <h3>📺 Série</h3>
+        </div>
+        <div class="box">
+          <h3>🎬 Filme</h3>
+        </div>
+        <div class="box">
+          <h3>🎨 Anime</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- CONFIGURATION ---
+    // Mot de passe choisi : "1234"
+    // SHA-256 hex correspondant :
+    const PASSWORD_HASH = "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4";
+
+    // --- UTILITAIRES ---
+    async function sha256hex(msg) {
+      const enc = new TextEncoder().encode(msg);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', enc);
+      const h = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2,'0')).join('');
+      return h;
+    }
+
+    // --- LOGIQUE D'AUTH ---
+    const pwInput = document.getElementById('pw');
+    const btn = document.getElementById('btn');
+    const err = document.getElementById('err');
+    const privateContent = document.getElementById('privateContent');
+    const loginDiv = document.getElementById('login');
+
+    async function checkPassword() {
+      err.textContent = '';
+      const val = pwInput.value || '';
+      if (!val) { err.textContent = 'Veuillez entrer le mot de passe.'; return; }
+      try {
+        const h = await sha256hex(val);
+        if (h === PASSWORD_HASH) {
+          // accès autorisé
+          loginDiv.classList.add('hidden');
+          privateContent.classList.remove('hidden');
+          privateContent.setAttribute('aria-hidden','false');
+          history.replaceState(null, '', '#ok');
+        } else {
+          err.textContent = 'Mot de passe incorrect.';
+        }
+      } catch(e) {
+        err.textContent = 'Erreur (ton navigateur ne supporte pas Web Crypto).';
+      }
+    }
+
+    btn.addEventListener('click', checkPassword);
+    pwInput.addEventListener('keyup', e => { if (e.key === 'Enter') checkPassword(); });
+  </script>
+</body>
+</html>

@@ -3,217 +3,147 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mon espace privé</title>
+  <title>Zebi Stream - Accueil</title>
   <style>
+    /* Variables globales - Look Premium */
     :root {
-      --bg: #0f1724;
+      --bg: #050810;
       --card: #0b1220;
-      --accent: #4f46e5;
-      --text: #e6eef8;
+      --accent: #6366f1; 
+      --neon: #a855f7;   
+      --text: #f1f5f9;
     }
 
     body {
       margin: 0;
-      font-family: 'Inter', system-ui, Arial, sans-serif;
-      background: linear-gradient(135deg, #071426 0%, #0b1220 100%);
+      font-family: 'Inter', system-ui, sans-serif;
+      background: radial-gradient(circle at center, #111827 0%, #050810 100%);
       color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       position: relative;
       overflow-x: hidden;
     }
 
-    .nav-streaming {
-      width: 100%;
-      background: rgba(15, 23, 42, 0.8);
-      backdrop-filter: blur(10px);
-      padding: 15px 0;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      z-index: 100;
-    }
-
-    .nav-streaming a {
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 500;
-      opacity: 0.8;
-      transition: all 0.3s;
-    }
-
-    .nav-streaming a:hover {
-      opacity: 1;
-      color: var(--accent);
-      transform: translateY(-2px);
-    }
-
+    /* LE TITRE ZEBI - Néon Ultra Visible */
     .site-title {
       position: absolute;
-      top: 80px;
-      right: 30px;
-      font-size: 24px;
+      top: 30px;
+      right: 50px;
+      font-size: 50px; /* Encore plus gros */
       font-weight: 900;
-      text-transform: lowercase;
-      opacity: 0.5;
-      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #fff;
+      text-shadow: 0 0 10px var(--neon), 0 0 20px var(--neon), 0 0 40px var(--neon);
+      letter-spacing: 5px;
+      animation: flicker 3s infinite;
+      user-select: none;
     }
 
-    .main-content {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
+    @keyframes flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+      20%, 22%, 24%, 55% { opacity: 0.7; }
     }
 
+    /* La Carte Glassmorphism */
     .card {
       width: 90%;
-      max-width: 500px;
-      background: rgba(255, 255, 255, 0.03);
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(15px);
-      text-align: center;
-    }
-
-    h1 { margin: 0 0 10px; font-size: 24px; font-weight: 600; }
-    p { margin: 0 0 25px; color: #a5b4fc; font-size: 15px; }
-    
-    .hidden { display: none; }
-    
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    input[type="password"] {
-      padding: 14px;
-      border-radius: 12px;
+      max-width: 650px;
+      background: rgba(15, 23, 42, 0.6);
+      padding: 50px;
+      border-radius: 30px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(0, 0, 0, 0.3);
-      color: var(--text);
-      outline: none;
-      font-size: 16px;
+      backdrop-filter: blur(20px);
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
 
-    input[type="password"]:focus { border-color: var(--accent); }
-
-    button {
-      padding: 14px;
-      border-radius: 12px;
-      border: 0;
-      background: var(--accent);
-      color: white;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s;
+    /* Animation Laser */
+    .card::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(168, 85, 247, 0.2), transparent);
+      transform: rotate(45deg);
+      animation: shine 5s infinite;
     }
 
-    button:hover { filter: brightness(1.2); transform: translateY(-2px); }
+    @keyframes shine {
+      0% { transform: translateX(-150%) rotate(45deg); }
+      100% { transform: translateX(150%) rotate(45deg); }
+    }
 
-    .error { color: #ffa1a1; font-size: 14px; margin-top: 15px; height: 20px; }
-    .foot { margin-top: 20px; font-size: 12px; opacity: 0.5; }
+    h1 { 
+      margin: 0 0 15px; 
+      font-size: 32px; 
+      background: linear-gradient(to right, #fff, var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
+    p { margin: 0 0 40px; color: #94a3b8; font-size: 18px; }
+
+    /* Grille du Menu */
     .grid {
       display: grid;
-      grid-template-columns: repeat(1, 1fr);
-      gap: 12px;
-      margin-top: 20px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
     }
 
     .box-link { text-decoration: none; color: inherit; }
 
     .box {
-      background: rgba(79, 70, 229, 0.15);
-      padding: 20px;
-      border-radius: 12px;
-      border: 1px solid rgba(79, 70, 229, 0.3);
-      transition: all 0.3s;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 35px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .box:hover {
-      background: var(--accent);
-      transform: scale(1.03);
+      background: rgba(99, 102, 241, 0.2);
+      border-color: var(--accent);
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(99, 102, 241, 0.2);
     }
+
+    .box h3 { margin: 0; font-size: 18px; letter-spacing: 1px; }
+
   </style>
 </head>
 <body>
 
-  <nav class="nav-streaming">
-    <a href="index.html">Accueil</a>
-    <a href="films.html">Films</a>
-    <a href="series.html">Séries</a>
-    <a href="animes.html">Animes</a>
-  </nav>
+  <div class="site-title">ZEBI</div>
 
-  <div class="site-title">zebi</div>
+  <div class="card">
+    <h1>ACCÈS ILLIMITÉ</h1>
+    <p>Choisis ta plateforme et commence le visionnage.</p>
 
-  <div class="main-content">
-    <div class="card">
-      <div id="login-section">
-        <h1>Espace Sécurisé</h1>
-        <p>Veuillez saisir votre mot de passe.</p>
-        <div class="input-group">
-          <input id="pw" type="password" placeholder="Mot de passe..." />
-          <button id="btn-valider">Accéder</button>
-        </div>
-        <div id="err" class="error"></div>
-        <div class="foot">Accès strictement personnel.</div>
-      </div>
-
-      <div id="private-section" class="hidden">
-        <h1>Bienvenue</h1>
-        <p>Choisissez votre catégorie :</p>
-        <div class="grid">
-          <a href="series.html" class="box-link"><div class="box"><h3>📺 Séries</h3></div></a>
-          <a href="films.html" class="box-link"><div class="box"><h3>🎬 Films</h3></div></a>
-          <a href="animes.html" class="box-link"><div class="box"><h3>🎨 Animes</h3></div></a>
-        </div>
-      </div>
+    <div class="grid">
+      <a href="series.html" class="box-link">
+        <div class="box"><h3>📺 SÉRIES</h3></div>
+      </a>
+      <a href="films.html" class="box-link">
+        <div class="box"><h3>🎬 FILMS</h3></div>
+      </a>
+      <a href="animes.html" class="box-link">
+        <div class="box"><h3>⛩️ ANIMES</h3></div>
+      </a>
     </div>
   </div>
 
   <script>
-    const HASH_CIBLE = "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4"; // Mot de passe : 1234
-
-    async function crypter(texte) {
-      const encodeur = new TextEncoder().encode(texte);
-      const buffer = await crypto.subtle.digest('SHA-256', encodeur);
-      return Array.from(new Uint8Array(buffer))
-        .map(b => b.toString(16).padStart(2, '0'))
-        .join('');
-    }
-
-    const input = document.getElementById('pw');
-    const btn = document.getElementById('btn-valider');
-    const msgErreur = document.getElementById('err');
-    const loginSec = document.getElementById('login-section');
-    const privateSec = document.getElementById('private-section');
-
-    async function verifier() {
-      const mdp = input.value;
-      if (!mdp) return;
-      const hashSaisi = await crypter(mdp);
-      if (hashSaisi === HASH_CIBLE) {
-        loginSec.classList.add('hidden');
-        privateSec.classList.remove('hidden');
-        localStorage.setItem('acces_autorise', 'true'); // On enregistre l'accès
-      } else {
-        msgErreur.textContent = "Mot de passe incorrect.";
-        input.value = "";
-      }
-    }
-
-    btn.addEventListener('click', verifier);
-    input.addEventListener('keypress', (e) => { if (e.key === 'Enter') verifier(); });
+    /* On force l'accès pour les autres pages au cas où */
+    localStorage.setItem('acces_autorise', 'true');
   </script>
+
 </body>
 </html>

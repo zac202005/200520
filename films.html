@@ -3,166 +3,132 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mes Films - zebi</title>
-  
-  <script>
-    /* Sécurité : Vérification de l'accès */
-    if (localStorage.getItem('acces_autorise') !== 'true') {
-      window.location.href = "index.html"; 
-    }
-  </script>
-
+  <title>ZEBI - Films</title>
   <style>
     :root {
-      --bg: #0f1724;
-      --card: #0b1220;
-      --accent: #4f46e5;
-      --text: #e6eef8;
+      --bg: #050810;
+      --accent: #6366f1; 
+      --neon: #a855f7;   
+      --text: #f1f5f9;
     }
 
     body {
       margin: 0;
-      font-family: 'Inter', system-ui, Arial, sans-serif;
-      background: linear-gradient(135deg, #071426 0%, #0b1220 100%);
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #050810;
       color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      position: relative;
     }
 
-    /* Menu de Navigation */
-    .nav-streaming {
+    /* Le Titre ZEBI qui reste en haut */
+    .header {
       width: 100%;
-      background: rgba(15, 23, 42, 0.8);
-      backdrop-filter: blur(10px);
-      padding: 15px 0;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      z-index: 100;
-      margin-bottom: 40px;
-    }
-
-    .nav-streaming a {
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 500;
-      opacity: 0.8;
-      transition: all 0.3s;
-    }
-
-    .nav-streaming a:hover {
-      opacity: 1;
-      color: var(--accent);
-    }
-
-    .site-title {
-      position: absolute;
-      top: 80px;
-      right: 30px;
-      font-size: 24px;
-      font-weight: 900;
-      opacity: 0.3;
-      text-transform: lowercase;
-    }
-
-    .card {
-      width: 90%;
-      max-width: 800px;
-      background: rgba(255, 255, 255, 0.03);
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(12px);
-      margin-bottom: 50px;
-    }
-
-    h1 { margin: 0 0 10px; font-size: 28px; color: white; }
-    p { margin: 0 0 25px; color: #a5b4fc; }
-
-    .list-container {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .item {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 18px;
-      border-radius: 12px;
+      padding: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: all 0.3s;
-      border: 1px solid transparent;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .item:hover {
-      background: rgba(79, 70, 229, 0.1);
-      border-color: var(--accent);
-      transform: translateX(5px);
-    }
-
-    .genre {
-      font-size: 11px;
-      font-weight: bold;
-      padding: 5px 10px;
-      border-radius: 6px;
-      background: rgba(79, 70, 229, 0.2);
-      border: 1px solid var(--accent);
-      color: #c7d2fe;
+    .site-title-mini {
+      font-size: 24px;
+      font-weight: 900;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      text-shadow: 0 0 10px var(--neon);
+      margin-left: 20px;
     }
 
-    .item span:first-child {
-      font-weight: 500;
-      font-size: 17px;
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-right: 20px;
+      font-weight: 600;
+      opacity: 0.7;
+    }
+
+    .nav-links a:hover { opacity: 1; color: var(--accent); }
+
+    /* La Grille de Films */
+    .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 25px;
+      width: 90%;
+      max-width: 1200px;
+      padding: 40px 0;
+    }
+
+    .movie-card {
+      background: #0b1220;
+      border-radius: 15px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .movie-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--neon);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .poster {
+      width: 100%;
+      height: 260px;
+      background: #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: rgba(255,255,255,0.2);
+    }
+
+    .info { padding: 15px; }
+    .info h3 { margin: 0; font-size: 16px; }
+    .info p { margin: 5px 0 0; font-size: 12px; color: var(--accent); }
+
+    /* Le Lecteur (caché au début) */
+    #player {
+      position: fixed; top:0; left:0; width:100%; height:100%;
+      background: black; z-index: 1000; display: none;
     }
   </style>
 </head>
 <body>
 
-  <nav class="nav-streaming">
-    <a href="index.html">Accueil</a>
-    <a href="films.html" style="color: var(--accent); font-weight: bold;">Films</a>
-    <a href="series.html">Séries</a>
-    <a href="animes.html">Animes</a>
-  </nav>
-
-  <div class="site-title">zebi</div>
-
-  <div class="card">
-    <h1>🎬 Mes Films</h1>
-    <p>Ta bibliothèque de films personnels.</p>
-
-    <div class="list-container">
-      <div class="item">
-        <span>Inception</span>
-        <span class="genre">Sci-Fi</span>
-      </div>
-      <div class="item">
-        <span>The Dark Knight</span>
-        <span class="genre">Action</span>
-      </div>
-      <div class="item">
-        <span>Interstellar</span>
-        <span class="genre">Aventure</span>
-      </div>
-      <div class="item">
-        <span>Gladiator</span>
-        <span class="genre">Drame / Action</span>
-      </div>
-      <div class="item">
-        <span>Spiderman: Across the Multiverse</span>
-        <span class="genre">Animation</span>
-      </div>
+  <div class="header">
+    <div class="site-title-mini">ZEBI</div>
+    <div class="nav-links">
+      <a href="index.html">Accueil</a>
+      <a href="series.html">Séries</a>
+      <a href="animes.html">Animes</a>
     </div>
   </div>
 
+  <div class="movie-grid">
+    <div class="movie-card">
+      <div class="poster">FILM 1</div>
+      <div class="info">
+        <h3>Prochainement...</h3>
+        <p>Action / Sci-Fi</p>
+      </div>
+    </div>
+    <div class="movie-card">
+      <div class="poster">FILM 2</div>
+      <div class="info">
+        <h3>Prochainement...</h3>
+        <p>Aventure</p>
+      </div>
+    </div>
+    </div>
+
+</body>
+</html>
 </body>
 </html>

@@ -3,162 +3,124 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mes Animes - zebi</title>
-
-  <script>
-    /* Sécurité : Vérification de l'accès */
-    if (localStorage.getItem('acces_autorise') !== 'true') {
-      window.location.href = "index.html"; 
-    }
-  </script>
-
+  <title>ZEBI - Animes</title>
   <style>
     :root {
-      --bg: #0f1724;
-      --card: #0b1220;
-      --accent: #4f46e5;
-      --text: #e6eef8;
+      --bg: #050810;
+      --accent: #f43f5e; /* Rose/Rouge type Anime */
+      --neon: #6366f1;   
+      --text: #f1f5f9;
     }
 
     body {
       margin: 0;
-      font-family: 'Inter', system-ui, Arial, sans-serif;
-      background: linear-gradient(135deg, #071426 0%, #0b1220 100%);
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #050810;
       color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      position: relative;
     }
 
-    /* Menu de Navigation */
-    .nav-streaming {
+    .header {
       width: 100%;
-      background: rgba(15, 23, 42, 0.8);
-      backdrop-filter: blur(10px);
-      padding: 15px 0;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      z-index: 100;
-      margin-bottom: 40px;
-    }
-
-    .nav-streaming a {
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 500;
-      opacity: 0.8;
-      transition: all 0.3s;
-    }
-
-    .nav-streaming a:hover {
-      opacity: 1;
-      color: var(--accent);
-    }
-
-    .site-title {
-      position: absolute;
-      top: 80px;
-      right: 30px;
-      font-size: 24px;
-      font-weight: 900;
-      opacity: 0.3;
-      text-transform: lowercase;
-    }
-
-    .card {
-      width: 90%;
-      max-width: 800px;
-      background: rgba(255, 255, 255, 0.03);
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(12px);
-      margin-bottom: 50px;
-    }
-
-    h1 { margin: 0 0 10px; font-size: 28px; color: white; }
-    p { margin: 0 0 25px; color: #a5b4fc; }
-
-    .list-container {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .item {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 18px;
-      border-radius: 12px;
+      padding: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: all 0.3s;
-      border: 1px solid transparent;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--accent);
+      box-sizing: border-box;
     }
 
-    .item:hover {
-      background: rgba(79, 70, 229, 0.1);
-      border-color: var(--accent);
-      transform: translateX(5px);
-    }
-
-    .studio {
-      font-size: 11px;
-      font-weight: bold;
-      padding: 5px 10px;
-      border-radius: 6px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #e6eef8;
+    .site-title-mini {
+      font-size: 24px;
+      font-weight: 900;
       text-transform: uppercase;
+      color: #fff;
+      text-shadow: 0 0 10px var(--accent);
+      margin-left: 20px;
     }
 
-    .item span:first-child {
-      font-weight: 500;
-      font-size: 17px;
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-right: 20px;
+      font-weight: 600;
+      opacity: 0.7;
     }
+
+    .nav-links a:hover { opacity: 1; color: var(--accent); }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 25px;
+      width: 90%;
+      max-width: 1200px;
+      padding: 40px 0;
+    }
+
+    .card {
+      background: #0b1220;
+      border-radius: 15px;
+      overflow: hidden;
+      border: 1px solid rgba(244, 63, 94, 0.2);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-10px) rotate(1deg);
+      border-color: var(--accent);
+      box-shadow: 0 10px 30px rgba(244, 63, 94, 0.3);
+    }
+
+    .poster {
+      width: 100%;
+      height: 280px;
+      background: #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: rgba(244, 63, 94, 0.1);
+      font-size: 20px;
+    }
+
+    .info { padding: 15px; }
+    .info h3 { margin: 0; font-size: 16px; color: #fff; }
+    .info p { margin: 5px 0 0; font-size: 12px; color: var(--accent); }
   </style>
 </head>
 <body>
 
-  <nav class="nav-streaming">
-    <a href="index.html">Accueil</a>
-    <a href="films.html">Films</a>
-    <a href="series.html">Séries</a>
-    <a href="animes.html" style="color: var(--accent); font-weight: bold;">Animes</a>
-  </nav>
+  <div class="header">
+    <div class="site-title-mini">ZEBI</div>
+    <div class="nav-links">
+      <a href="index.html">Accueil</a>
+      <a href="films.html">Films</a>
+      <a href="series.html">Séries</a>
+      <a href="animes.html" style="color:var(--accent)">Animes</a>
+    </div>
+  </div>
 
-  <div class="site-title">zebi</div>
+  <div class="content-grid">
+    <div class="card">
+      <div class="poster">ANIME 1</div>
+      <div class="info">
+        <h3>Prochainement...</h3>
+        <p>Shonen / Action</p>
+      </div>
+    </div>
 
-  <div class="card">
-    <h1>🎨 Mes Animes</h1>
-    <p>Ta liste d'animation japonaise.</p>
-
-    <div class="list-container">
-      <div class="item">
-        <span>One Piece</span>
-        <span class="studio">Toei Animation</span>
-      </div>
-      <div class="item">
-        <span>Jujutsu Kaisen</span>
-        <span class="studio">MAPPA</span>
-      </div>
-      <div class="item">
-        <span>Attack on Titan</span>
-        <span class="studio">Wit / MAPPA</span>
-      </div>
-      <div class="item">
-        <span>Demon Slayer</span>
-        <span class="studio">Ufotable</span>
-      </div>
-      <div class="item">
-        <span>Solo Leveling</span>
-        <span class="studio">A-1 Pictures</span>
+    <div class="card">
+      <div class="poster">ANIME 2</div>
+      <div class="info">
+        <h3>Prochainement...</h3>
+        <p>Seinen / Drame</p>
       </div>
     </div>
   </div>

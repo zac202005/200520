@@ -102,5 +102,66 @@
     }
 
     .item:hover {
-      background:
-    
+      background: rgba(79, 70, 229, 0.1);
+      border-color: var(--accent);
+      transform: translateX(5px);
+    }
+
+    .studio {
+      font-size: 11px;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #e6eef8;
+      text-transform: uppercase;
+    }
+
+    .item span:first-child {
+      font-weight: 500;
+      font-size: 17px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav-streaming">
+    <a href="index.html">Accueil</a>
+    <a href="films.html">Films</a>
+    <a href="series.html">Séries</a>
+    <a href="animes.html" style="color: var(--accent); font-weight: bold;">Animes</a>
+  </nav>
+
+  <div class="site-title">zebi</div>
+
+  <div class="card">
+    <h1>🎨 Mes Animes</h1>
+    <p>Ta liste d'animation japonaise.</p>
+
+    <div class="list-container">
+      <div class="item">
+        <span>One Piece</span>
+        <span class="studio">Toei Animation</span>
+      </div>
+      <div class="item">
+        <span>Jujutsu Kaisen</span>
+        <span class="studio">MAPPA</span>
+      </div>
+      <div class="item">
+        <span>Attack on Titan</span>
+        <span class="studio">Wit / MAPPA</span>
+      </div>
+      <div class="item">
+        <span>Demon Slayer</span>
+        <span class="studio">Ufotable</span>
+      </div>
+      <div class="item">
+        <span>Solo Leveling</span>
+        <span class="studio">A-1 Pictures</span>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

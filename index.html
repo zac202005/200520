@@ -3,12 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Zebi Stream - Accueil</title>
+  <title>ZEBI STREAMING</title>
   <style>
-    /* Variables globales - Look Premium */
     :root {
       --bg: #050810;
-      --card: #0b1220;
       --accent: #6366f1; 
       --neon: #a855f7;   
       --text: #f1f5f9;
@@ -24,124 +22,109 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      position: relative;
-      overflow-x: hidden;
-    }
-
-    /* LE TITRE ZEBI - Néon Ultra Visible */
-    .site-title {
-      position: absolute;
-      top: 30px;
-      right: 50px;
-      font-size: 50px; /* Encore plus gros */
-      font-weight: 900;
-      text-transform: uppercase;
-      color: #fff;
-      text-shadow: 0 0 10px var(--neon), 0 0 20px var(--neon), 0 0 40px var(--neon);
-      letter-spacing: 5px;
-      animation: flicker 3s infinite;
-      user-select: none;
-    }
-
-    @keyframes flicker {
-      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
-      20%, 22%, 24%, 55% { opacity: 0.7; }
-    }
-
-    /* La Carte Glassmorphism */
-    .card {
-      width: 90%;
-      max-width: 650px;
-      background: rgba(15, 23, 42, 0.6);
-      padding: 50px;
-      border-radius: 30px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(20px);
-      text-align: center;
-      position: relative;
       overflow: hidden;
     }
 
-    /* Animation Laser */
-    .card::before {
-      content: "";
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(168, 85, 247, 0.2), transparent);
-      transform: rotate(45deg);
-      animation: shine 5s infinite;
+    /* ZEBI BIEN VISIBLE AU MILIEU EN HAUT */
+    .site-title {
+      font-size: 80px; /* Taille énorme */
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #fff;
+      text-shadow: 0 0 10px var(--neon), 0 0 30px var(--neon), 0 0 60px var(--neon);
+      letter-spacing: 15px;
+      margin-bottom: 50px;
+      animation: pulse 2s infinite alternate;
+      user-select: none;
     }
 
-    @keyframes shine {
-      0% { transform: translateX(-150%) rotate(45deg); }
-      100% { transform: translateX(150%) rotate(45deg); }
+    @keyframes pulse {
+      from { transform: scale(1); opacity: 0.8; }
+      to { transform: scale(1.05); opacity: 1; }
     }
 
-    h1 { 
-      margin: 0 0 15px; 
-      font-size: 32px; 
-      background: linear-gradient(to right, #fff, var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    p { margin: 0 0 40px; color: #94a3b8; font-size: 18px; }
-
-    /* Grille du Menu */
+    /* Grille de sélection directe */
     .grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      gap: 30px;
+      width: 90%;
+      max-width: 900px;
+      z-index: 10;
     }
 
     .box-link { text-decoration: none; color: inherit; }
 
     .box {
       background: rgba(255, 255, 255, 0.03);
-      padding: 35px 10px;
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 60px 20px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      text-align: center;
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .box::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(135deg, var(--accent), var(--neon));
+      opacity: 0;
+      transition: opacity 0.4s;
+      z-index: -1;
     }
 
     .box:hover {
-      background: rgba(99, 102, 241, 0.2);
-      border-color: var(--accent);
-      transform: translateY(-10px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(99, 102, 241, 0.2);
+      transform: translateY(-15px) scale(1.05);
+      border-color: var(--neon);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(168, 85, 247, 0.3);
     }
 
-    .box h3 { margin: 0; font-size: 18px; letter-spacing: 1px; }
+    .box:hover::before { opacity: 0.2; }
 
+    .box h3 { 
+      margin: 0; 
+      font-size: 22px; 
+      letter-spacing: 2px; 
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    /* Particules de fond pour le style */
+    .bg-glow {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: var(--accent);
+      filter: blur(150px);
+      opacity: 0.15;
+      z-index: 0;
+      border-radius: 50%;
+    }
   </style>
 </head>
 <body>
 
+  <div class="bg-glow"></div>
+
   <div class="site-title">ZEBI</div>
 
-  <div class="card">
-    <h1>ACCÈS ILLIMITÉ</h1>
-    <p>Choisis ta plateforme et commence le visionnage.</p>
-
-    <div class="grid">
-      <a href="series.html" class="box-link">
-        <div class="box"><h3>📺 SÉRIES</h3></div>
-      </a>
-      <a href="films.html" class="box-link">
-        <div class="box"><h3>🎬 FILMS</h3></div>
-      </a>
-      <a href="animes.html" class="box-link">
-        <div class="box"><h3>⛩️ ANIMES</h3></div>
-      </a>
-    </div>
+  <div class="grid">
+    <a href="series.html" class="box-link">
+      <div class="box"><h3>📺 SÉRIES</h3></div>
+    </a>
+    <a href="films.html" class="box-link">
+      <div class="box"><h3>🎬 FILMS</h3></div>
+    </a>
+    <a href="animes.html" class="box-link">
+      <div class="box"><h3>⛩️ ANIMES</h3></div>
+    </a>
   </div>
 
   <script>
-    /* On force l'accès pour les autres pages au cas où */
     localStorage.setItem('acces_autorise', 'true');
   </script>
 

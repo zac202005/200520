@@ -4,6 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mes Films - zebi</title>
+  
+  <script>
+    /* Sécurité : Vérification de l'accès */
+    if (localStorage.getItem('acces_autorise') !== 'true') {
+      window.location.href = "index.html"; 
+    }
+  </script>
+
   <style>
     :root {
       --bg: #0f1724;
@@ -11,25 +19,54 @@
       --accent: #4f46e5;
       --text: #e6eef8;
     }
+
     body {
       margin: 0;
-      font-family: Inter, system-ui, Arial;
+      font-family: 'Inter', system-ui, Arial, sans-serif;
       background: linear-gradient(135deg, #071426 0%, #0b1220 100%);
       color: var(--text);
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
       position: relative;
+    }
+
+    /* Menu de Navigation */
+    .nav-streaming {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 15px 0;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      z-index: 100;
+      margin-bottom: 40px;
+    }
+
+    .nav-streaming a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      opacity: 0.8;
+      transition: all 0.3s;
+    }
+
+    .nav-streaming a:hover {
+      opacity: 1;
+      color: var(--accent);
     }
 
     .site-title {
       position: absolute;
-      top: 20px;
+      top: 80px;
       right: 30px;
       font-size: 24px;
       font-weight: 900;
-      opacity: 0.7;
+      opacity: 0.3;
+      text-transform: lowercase;
     }
 
     .card {
@@ -41,9 +78,10 @@
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
       border: 1px solid rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(12px);
+      margin-bottom: 50px;
     }
 
-    h1 { margin: 0 0 10px; font-size: 24px; color: var(--accent); }
+    h1 { margin: 0 0 10px; font-size: 28px; color: white; }
     p { margin: 0 0 25px; color: #a5b4fc; }
 
     .list-container {
@@ -54,44 +92,51 @@
 
     .item {
       background: rgba(255, 255, 255, 0.05);
-      padding: 15px;
-      border-radius: 10px;
+      padding: 18px;
+      border-radius: 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: background 0.3s;
-    }
-    .item:hover {
-      background: rgba(255, 255, 255, 0.1);
+      transition: all 0.3s;
+      border: 1px solid transparent;
     }
 
-    .btn-back {
-      display: inline-block;
-      margin-bottom: 20px;
-      color: var(--text);
-      text-decoration: none;
-      font-size: 14px;
-      opacity: 0.6;
-      transition: opacity 0.2s;
+    .item:hover {
+      background: rgba(79, 70, 229, 0.1);
+      border-color: var(--accent);
+      transform: translateX(5px);
     }
-    .btn-back:hover { opacity: 1; }
 
     .genre {
-      font-size: 12px;
-      padding: 4px 8px;
-      border-radius: 4px;
-      background: rgba(79, 70, 229, 0.3);
+      font-size: 11px;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 6px;
+      background: rgba(79, 70, 229, 0.2);
       border: 1px solid var(--accent);
+      color: #c7d2fe;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .item span:first-child {
+      font-weight: 500;
+      font-size: 17px;
     }
   </style>
 </head>
 <body>
 
+  <nav class="nav-streaming">
+    <a href="index.html">Accueil</a>
+    <a href="films.html" style="color: var(--accent); font-weight: bold;">Films</a>
+    <a href="series.html">Séries</a>
+    <a href="animes.html">Animes</a>
+  </nav>
+
   <div class="site-title">zebi</div>
 
   <div class="card">
-    <a href="index.html" class="btn-back">← Retour à l'accueil</a>
-    
     <h1>🎬 Mes Films</h1>
     <p>Ta bibliothèque de films personnels.</p>
 
@@ -107,6 +152,14 @@
       <div class="item">
         <span>Interstellar</span>
         <span class="genre">Aventure</span>
+      </div>
+      <div class="item">
+        <span>Gladiator</span>
+        <span class="genre">Drame / Action</span>
+      </div>
+      <div class="item">
+        <span>Spiderman: Across the Multiverse</span>
+        <span class="genre">Animation</span>
       </div>
     </div>
   </div>

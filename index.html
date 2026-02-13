@@ -209,14 +209,23 @@
     </div>
   </div>
 
-  <script>
-    // Récupération des infos du profil stockées dans profils.html
-    const userName = localStorage.getItem('zebi_user') || 'Invité';
-    const userEmoji = localStorage.getItem('zebi_emoji') || '👤';
+<script>
+  if (!localStorage.getItem('zebi_user')) {
+    window.location.href = 'profils.html';
+}
+  // Récupère le nom et l'emoji enregistrés
+  const name = localStorage.getItem('zebi_user') || 'Invité';
+  const emoji = localStorage.getItem('zebi_emoji') || '👤';
 
-    document.getElementById('display-name').innerText = userName;
-    document.getElementById('display-emoji').innerText = userEmoji;
-  </script>
+  // Les affiche dans les balises correspondantes
+  // Assure-toi d'avoir des éléments avec ces ID dans ton HTML
+  if(document.getElementById('display-name')) {
+      document.getElementById('display-name').innerText = name;
+  }
+  if(document.getElementById('display-emoji')) {
+      document.getElementById('display-emoji').innerText = emoji;
+  }
+</script>
 
 </body>
 </html>

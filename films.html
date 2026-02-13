@@ -10,7 +10,6 @@
       --accent: #6366f1;
       --neon: #a855f7;
       --text: #f1f5f9;
-      --card-bg: rgba(255, 255, 255, 0.03);
     }
 
     body {
@@ -31,7 +30,7 @@
     .blob-2 { background: var(--accent); bottom: -100px; right: -100px; animation-delay: -7s; }
     @keyframes float { 0% { transform: translate(0, 0); } 100% { transform: translate(100px, 50px); } }
 
-    /* HEADER FIXE */
+    /* HEADER */
     .header {
       width: 100%;
       padding: 15px 40px;
@@ -47,31 +46,12 @@
       box-sizing: border-box;
     }
 
-    .site-logo {
-      font-size: 24px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      text-shadow: 0 0 10px var(--neon);
-      text-decoration: none;
-      color: white;
-    }
+    .site-logo { font-size: 24px; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; text-shadow: 0 0 10px var(--neon); text-decoration: none; color: white; }
+    
+    .nav-links a { color: white; text-decoration: none; margin-left: 25px; font-weight: 600; opacity: 0.6; transition: 0.3s; }
+    .nav-links a:hover, .active { opacity: 1; color: var(--accent) !important; }
 
-    .nav-links a {
-      color: white;
-      text-decoration: none;
-      margin-left: 25px;
-      font-weight: 600;
-      opacity: 0.6;
-      transition: 0.3s;
-    }
-
-    .nav-links a:hover, .active {
-      opacity: 1;
-      color: var(--accent) !important;
-    }
-
-    /* GRILLE DE FILMS */
+    /* GRILLE */
     .content-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -82,53 +62,23 @@
     }
 
     .card {
-      background: var(--card-bg);
+      background: rgba(255, 255, 255, 0.03);
       border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(10px);
       overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: 0.4s;
       cursor: pointer;
-      position: relative;
     }
 
-    .card:hover {
-      transform: translateY(-10px) scale(1.02);
-      border-color: var(--neon);
-      box-shadow: 0 15px 35px rgba(168, 85, 247, 0.2);
-    }
+    .card:hover { transform: translateY(-10px); border-color: var(--neon); box-shadow: 0 15px 35px rgba(168, 85, 247, 0.2); }
 
-    .poster {
-      width: 100%;
-      height: 320px;
-      background: #0b1220;
-      position: relative;
-    }
-
-    .poster img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* Badge Qualité */
-    .badge {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: var(--accent);
-      padding: 4px 8px;
-      border-radius: 6px;
-      font-size: 10px;
-      font-weight: 900;
-    }
+    .poster { width: 100%; height: 320px; background: #0b1220; }
+    .poster img { width: 100%; height: 100%; object-fit: cover; }
 
     .info { padding: 18px; }
-    .info h3 { margin: 0; font-size: 17px; font-weight: 700; color: #fff; }
-    .info p { margin: 6px 0 0; font-size: 13px; color: var(--accent); opacity: 0.8; }
-
-    /* Message si vide */
-    #empty-msg { text-align: center; grid-column: 1/-1; padding: 50px; opacity: 0.5; }
+    .info h3 { margin: 0; font-size: 17px; }
+    .info p { margin: 6px 0 0; font-size: 13px; color: var(--accent); }
   </style>
 </head>
 <body>
@@ -152,4 +102,54 @@
     </div>
 
   <script>
-    // --- TA
+    // --- ICI TU AJOUTES TES FILMS ---
+    const database = [
+      {
+        "id": 1,
+        "titre": "Inception",
+        "categorie": "films",
+        "genre": "Sci-Fi / Action",
+        "image": "https://image.tmdb.org/t/p/w500/edvWebSYznCgh4oWubvWgRUD9S3.jpg",
+        "lien": "player.html?v=1"
+      },
+      {
+        "id": 2,
+        "titre": "Spider-Man",
+        "categorie": "films",
+        "genre": "Action",
+        "image": "https://image.tmdb.org/t/p/w500/1g0dhYtWyS9ZTOUAszD2S3ZRs5P.jpg",
+        "lien": "player.html?v=2"
+      },
+      {
+        "id": 3,
+        "titre": "John Wick",
+        "categorie": "films",
+        "genre": "Action / Crime",
+        "image": "https://image.tmdb.org/t/p/w500/vZ7v907bmv7psqv97whp7t9p93t.jpg",
+        "lien": "player.html?v=3"
+      }
+    ];
+
+    function charger() {
+      const container = document.getElementById('movie-container');
+      // On filtre pour ne prendre que les films
+      const films = database.filter(item => item.categorie === "films");
+
+      if (films.length === 0) {
+        container.innerHTML = "<p>Aucun film trouvé.</p>";
+        return;
+      }
+
+      container.innerHTML = films.map(f => `
+        <div class="card" onclick="window.location.href='${f.lien}'">
+          <div class="poster"><img src="${f.image}"></div>
+          <div class="info">
+            <h3>${f.titre}</h3>
+            <p>${f.genre}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    window.onload = charger;
+  </script>

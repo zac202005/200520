@@ -52,29 +52,31 @@
       100% { transform: translate(100px, 50px) scale(1.2); }
     }
 
-    /* --- TAG DU PROFIL --- */
+    /* --- TAG DU PROFIL (CORRIGÉ) --- */
     .user-tag {
       position: absolute;
       top: 30px;
       left: 30px;
       display: flex;
       align-items: center;
-      gap: 15px;
-      background: rgba(255, 255, 255, 0.05);
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.1);
       padding: 10px 20px;
       border-radius: 50px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       backdrop-filter: blur(10px);
       text-decoration: none;
       color: white;
       font-weight: 600;
       transition: 0.3s;
       cursor: pointer;
+      z-index: 100; /* Passe devant les autres éléments */
     }
 
     .user-tag:hover {
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.2);
       border-color: var(--neon);
+      transform: scale(1.05);
     }
 
     /* --- TITRE --- */
@@ -87,6 +89,7 @@
       text-transform: uppercase;
       text-shadow: 0 0 15px var(--neon);
       letter-spacing: 5px;
+      z-index: 10;
     }
 
     /* --- CARTE CENTRALE --- */
@@ -100,6 +103,7 @@
       backdrop-filter: blur(25px);
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
       text-align: center;
+      z-index: 5;
     }
 
     h1 { margin: 0 0 10px; font-size: 32px; font-weight: 800; color: white; }
@@ -156,14 +160,15 @@
   </style>
 </head>
 <body>
+
   <div class="neon-bg">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
   </div>
 
-  <a href="profils.html" class="user-tag">
+  <a href="profils.html" class="user-tag" title="Changer de profil">
     <span id="display-emoji">👤</span>
-    <span id="display-name">Chargement...</span>
+    <span id="display-name">Invité</span>
   </a>
 
   <div class="site-title">ZEBI</div>
@@ -180,25 +185,20 @@
       <a href="animes.html" class="box"><span>⛩️</span><h3>Animes</h3></a>
     </div>
   </div>
-  <script>
-  // On récupère les infos sauvegardées
-  const savedName = localStorage.getItem('zebi_user');
-  const savedEmoji = localStorage.getItem('zebi_emoji');
-
-  // Si on les trouve, on remplace "Invité" par ton vrai nom
-  if (savedName) {
-    document.getElementById('display-name').innerText = savedName;
-    document.getElementById('display-emoji').innerText = savedEmoji;
-  }
-</script>
 
   <script>
-    // Récupérer les infos du profil localement
-    const savedName = localStorage.getItem('zebi_user');
-    const savedEmoji = localStorage.getItem('zebi_emoji');
+    // Récupération et affichage du profil
+    const name = localStorage.getItem('zebi_user');
+    const emoji = localStorage.getItem('zebi_emoji');
 
-    // Si on a les infos, on les affiche. Sinon, on met un défaut.
-    document.getElementById('display-name').innerText = savedName || 'Invité';
-    document.getElementById('display-emoji').innerText = savedEmoji || '👤';
+    if (!name) {
+      // Si aucun profil n'est créé, on renvoie vers la page de création
+      window.location.href = 'profils.html';
+    } else {
+      document.getElementById('display-name').innerText = name;
+      document.getElementById('display-emoji').innerText = emoji;
+    }
+  </script>
 
-    // Si le nom n'existe pas du tout, on renvoie vers la page de choix de
+</body>
+</html>

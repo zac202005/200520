@@ -16,7 +16,7 @@
 
     body {
       margin: 0;
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       background-color: var(--bg);
       color: var(--text);
       height: 100vh;
@@ -30,10 +30,7 @@
     /* --- NÉONS ANIMÉS EN ARRIÈRE-PLAN --- */
     .neon-bg {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0; width: 100%; height: 100%;
       z-index: -1;
     }
 
@@ -55,7 +52,7 @@
       100% { transform: translate(100px, 50px) scale(1.2); }
     }
 
-    /* --- TAG DU PROFIL (En haut à gauche) --- */
+    /* --- TAG DU PROFIL (CLIQUABLE POUR CHANGER) --- */
     .user-tag {
       position: absolute;
       top: 30px;
@@ -68,13 +65,20 @@
       border-radius: 50px;
       border: 1px solid rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(10px);
+      text-decoration: none;
+      color: white;
       font-weight: 600;
-      letter-spacing: 0.5px;
+      transition: 0.3s;
+      cursor: pointer;
     }
 
-    .user-tag span { font-size: 20px; }
+    .user-tag:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: var(--neon);
+      transform: scale(1.05);
+    }
 
-    /* --- TITRE ZEBI (En haut à droite) --- */
+    /* --- TITRE --- */
     .site-title {
       position: absolute;
       top: 20px;
@@ -82,150 +86,15 @@
       font-size: 35px;
       font-weight: 900;
       text-transform: uppercase;
-      color: #fff;
-      text-shadow: 0 0 15px var(--neon), 0 0 30px var(--neon);
+      text-shadow: 0 0 15px var(--neon);
       letter-spacing: 5px;
-      animation: flicker 3s infinite;
-    }
-
-    @keyframes flicker {
-      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
-      20%, 22%, 24%, 55% { opacity: 0.6; }
     }
 
     /* --- CARTE CENTRALE --- */
     .card {
       width: 90%;
-      max-width: 650px;
+      max-width: 600px;
       background: var(--card);
       padding: 50px 40px;
       border-radius: 30px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(25px);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
-      text-align: center;
-      position: relative;
-    }
-
-    h1 {
-      margin: 0 0 10px;
-      font-size: 36px;
-      font-weight: 800;
-      background: linear-gradient(to right, #fff, var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    p { margin-bottom: 30px; opacity: 0.6; font-size: 16px; }
-
-    /* --- BARRE DE RECHERCHE --- */
-    .search-container {
-      position: relative;
-      margin-bottom: 35px;
-    }
-
-    .search-input {
-      width: 100%;
-      padding: 18px 25px;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 15px;
-      color: white;
-      font-size: 16px;
-      outline: none;
-      box-sizing: border-box;
-      transition: all 0.3s ease;
-    }
-
-    .search-input:focus {
-      border-color: var(--accent);
-      background: rgba(0, 0, 0, 0.4);
-      box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
-    }
-
-    /* --- GRILLE DES CATÉGORIES --- */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .box-link { text-decoration: none; }
-
-    .box {
-      background: rgba(255, 255, 255, 0.03);
-      padding: 25px 15px;
-      border-radius: 18px;
-      text-align: center;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      color: white;
-    }
-
-    .box:hover {
-      background: rgba(168, 85, 247, 0.2);
-      border-color: var(--neon);
-      transform: translateY(-10px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-    }
-
-    .box span { font-size: 24px; display: block; margin-bottom: 8px; }
-    .box h3 { margin: 0; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
-
-  </style>
-</head>
-<body>
-
-  <div class="neon-bg">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-  </div>
-
-  <div class="user-tag">
-    <span id="display-emoji">👤</span>
-    <span id="display-name">Invité</span>
-  </div>
-
-  <div class="site-title">ZEBI</div>
-
-  <div class="card">
-    <h1>Prêt pour la session ?</h1>
-    <p>Recherche un titre ou choisis une catégorie.</p>
-    
-    <div class="search-container">
-      <input type="text" class="search-input" placeholder="Titre du film, anime, acteur...">
-    </div>
-
-    <div class="grid">
-      <a href="films.html" class="box-link">
-        <div class="box"><span>🎬</span><h3>Films</h3></div>
-      </a>
-      <a href="series.html" class="box-link">
-        <div class="box"><span>📺</span><h3>Séries</h3></div>
-      </a>
-      <a href="animes.html" class="box-link">
-        <div class="box"><span>⛩️</span><h3>Animes</h3></div>
-      </a>
-    </div>
-  </div>
-
-<script>
-  if (!localStorage.getItem('zebi_user')) {
-    window.location.href = 'profils.html';
-}
-  // Récupère le nom et l'emoji enregistrés
-  const name = localStorage.getItem('zebi_user') || 'Invité';
-  const emoji = localStorage.getItem('zebi_emoji') || '👤';
-
-  // Les affiche dans les balises correspondantes
-  // Assure-toi d'avoir des éléments avec ces ID dans ton HTML
-  if(document.getElementById('display-name')) {
-      document.getElementById('display-name').innerText = name;
-  }
-  if(document.getElementById('display-emoji')) {
-      document.getElementById('display-emoji').innerText = emoji;
-  }
-</script>
-
-</body>
-</html>
+      border: 1px solid rgba(255, 25

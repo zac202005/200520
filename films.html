@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ZEBI - Films</title>
+  <title>ZEBI - Catalogue</title>
   <style>
     :root {
       --bg: #050810;
@@ -15,7 +15,7 @@
     body {
       margin: 0;
       font-family: 'Inter', system-ui, sans-serif;
-      background: #050810;
+      background: var(--bg);
       color: var(--text);
       min-height: 100vh;
       display: flex;
@@ -23,113 +23,126 @@
       align-items: center;
     }
 
-    /* Le Titre ZEBI qui reste en haut */
+    /* BACKGROUND NÉON ANIMÉ */
+    .neon-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+    .blob { position: absolute; width: 500px; height: 500px; border-radius: 50%; filter: blur(120px); opacity: 0.2; animation: float 15s infinite alternate ease-in-out; }
+    .blob-1 { background: var(--neon); top: -100px; left: -100px; }
+    .blob-2 { background: var(--accent); bottom: -100px; right: -100px; animation-delay: -7s; }
+    @keyframes float { 0% { transform: translate(0, 0); } 100% { transform: translate(100px, 50px); } }
+
+    /* HEADER */
     .header {
       width: 100%;
-      padding: 20px;
+      padding: 20px 50px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       background: rgba(15, 23, 42, 0.8);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      box-sizing: border-box;
     }
 
-    .site-title-mini {
-      font-size: 24px;
-      font-weight: 900;
-      text-transform: uppercase;
-      text-shadow: 0 0 10px var(--neon);
-      margin-left: 20px;
-    }
+    .site-title-mini { font-size: 24px; font-weight: 900; text-transform: uppercase; text-shadow: 0 0 10px var(--neon); }
+    .nav-links a { color: white; text-decoration: none; margin-left: 20px; font-weight: 600; opacity: 0.7; transition: 0.3s; }
+    .nav-links a:hover, .active { opacity: 1; color: var(--accent) !important; }
 
-    .nav-links a {
-      color: white;
-      text-decoration: none;
-      margin-right: 20px;
-      font-weight: 600;
-      opacity: 0.7;
-    }
-
-    .nav-links a:hover { opacity: 1; color: var(--accent); }
-
-    /* La Grille de Films */
-    .movie-grid {
+    /* GRILLE DYNAMIQUE */
+    .content-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 25px;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 30px;
       width: 90%;
       max-width: 1200px;
-      padding: 40px 0;
+      padding: 50px 0;
     }
 
-    .movie-card {
-      background: #0b1220;
+    .card {
+      background: rgba(255, 255, 255, 0.03);
       border-radius: 15px;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      transition: all 0.3s;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      transition: 0.4s;
       cursor: pointer;
     }
 
-    .movie-card:hover {
-      transform: translateY(-10px);
-      border-color: var(--neon);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    }
+    .card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3); }
 
-    .poster {
-      width: 100%;
-      height: 260px;
-      background: #1e293b;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      color: rgba(255,255,255,0.2);
-    }
+    .poster { width: 100%; height: 280px; background: #1e293b; }
+    .poster img { width: 100%; height: 100%; object-fit: cover; }
 
     .info { padding: 15px; }
-    .info h3 { margin: 0; font-size: 16px; }
+    .info h3 { margin: 0; font-size: 16px; color: #fff; }
     .info p { margin: 5px 0 0; font-size: 12px; color: var(--accent); }
-
-    /* Le Lecteur (caché au début) */
-    #player {
-      position: fixed; top:0; left:0; width:100%; height:100%;
-      background: black; z-index: 1000; display: none;
-    }
+    
+    .status-tag { font-size: 9px; background: var(--neon); padding: 2px 6px; border-radius: 4px; margin-bottom: 5px; display: inline-block; font-weight: bold; }
   </style>
 </head>
 <body>
+
+  <div class="neon-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
 
   <div class="header">
     <div class="site-title-mini">ZEBI</div>
     <div class="nav-links">
       <a href="index.html">Accueil</a>
-      <a href="films.html">Films</a>
-      <a href="series.html">Séries</a>
-      <a href="animes.html">Animes</a>
+      <a href="films.html" id="nav-films">Films</a>
+      <a href="series.html" id="nav-series">Séries</a>
+      <a href="animes.html" id="nav-animes">Animes</a>
     </div>
   </div>
 
-  <div class="movie-grid">
-    <div class="movie-card">
-      <div class="poster">FILM 1</div>
-      <div class="info">
-        <h3>Prochainement...</h3>
-        <p>Action / Sci-Fi</p>
-      </div>
-    </div>
-    <div class="movie-card">
-      <div class="poster">FILM 2</div>
-      <div class="info">
-        <h3>Prochainement...</h3>
-        <p>Aventure</p>
-      </div>
-    </div>
+  <div class="content-grid" id="movie-container">
     </div>
 
-</body>
-</html>
+  <script>
+    async function chargerContenu() {
+      try {
+        const reponse = await fetch('data.json');
+        const data = await reponse.json();
+        const container = document.getElementById('movie-container');
+        
+        // Détecter la catégorie via le nom du fichier
+        const path = window.location.pathname.split("/").pop();
+        const categorie = path.replace(".html", ""); 
+        
+        // Mettre en gras le lien actif dans le menu
+        const navLink = document.getElementById('nav-' + categorie);
+        if(navLink) navLink.classList.add('active');
+
+        // Filtrer les films/series/animes
+        const items = data.filter(item => item.categorie === categorie);
+
+        if (items.length === 0) {
+          container.innerHTML = "<p>Bientôt disponible...</p>";
+          return;
+        }
+
+        container.innerHTML = "";
+        items.forEach(item => {
+          container.innerHTML += `
+            <div class="card" onclick="window.location.href='${item.lien}'">
+              <div class="poster">
+                <img src="${item.image}" alt="${item.titre}">
+              </div>
+              <div class="info">
+                <span class="status-tag">4K ULTRA HD</span>
+                <h3>${item.titre}</h3>
+                <p>${item.genre}</p>
+              </div>
+            </div>
+          `;
+        });
+      } catch (e) {
+        console.error("Erreur de chargement:", e);
+      }
+    }
+
+    window.onload = chargerContenu;
+  </script>
 </body>
 </html>

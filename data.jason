@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "titre": "Inception",
+    "categorie": "films",
+    "genre": "Sci-Fi",
+    "image": "https://image.tmdb.org/t/p/w500/edvWebSYznCgh4oWubvWgRUD9S3.jpg",
+    "lien": "https://ton-lien-video.com/embed/inception"
+  },
+  {
+    "id": 2,
+    "titre": "Breaking Bad",
+    "categorie": "series",
+    "genre": "Drame",
+    "image": "https://image.tmdb.org/t/p/w500/ggGTKkyBN9A9vhk7qYpQH1ls64P.jpg",
+    "lien": "https://ton-lien-video.com/embed/breaking-bad"
+  }
+]

@@ -3,13 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ZEBI - Catalogue</title>
+  <title>ZEBI - Films</title>
   <style>
     :root {
       --bg: #050810;
-      --accent: #6366f1; 
-      --neon: #a855f7;   
+      --accent: #6366f1;
+      --neon: #a855f7;
       --text: #f1f5f9;
+      --card-bg: rgba(255, 255, 255, 0.03);
     }
 
     body {
@@ -25,58 +26,109 @@
 
     /* BACKGROUND NÉON ANIMÉ */
     .neon-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
-    .blob { position: absolute; width: 500px; height: 500px; border-radius: 50%; filter: blur(120px); opacity: 0.2; animation: float 15s infinite alternate ease-in-out; }
+    .blob { position: absolute; width: 500px; height: 500px; border-radius: 50%; filter: blur(120px); opacity: 0.15; animation: float 15s infinite alternate ease-in-out; }
     .blob-1 { background: var(--neon); top: -100px; left: -100px; }
     .blob-2 { background: var(--accent); bottom: -100px; right: -100px; animation-delay: -7s; }
     @keyframes float { 0% { transform: translate(0, 0); } 100% { transform: translate(100px, 50px); } }
 
-    /* HEADER */
+    /* HEADER FIXE */
     .header {
       width: 100%;
-      padding: 20px 50px;
+      padding: 15px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       background: rgba(15, 23, 42, 0.8);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(15px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
       box-sizing: border-box;
     }
 
-    .site-title-mini { font-size: 24px; font-weight: 900; text-transform: uppercase; text-shadow: 0 0 10px var(--neon); }
-    .nav-links a { color: white; text-decoration: none; margin-left: 20px; font-weight: 600; opacity: 0.7; transition: 0.3s; }
-    .nav-links a:hover, .active { opacity: 1; color: var(--accent) !important; }
+    .site-logo {
+      font-size: 24px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      text-shadow: 0 0 10px var(--neon);
+      text-decoration: none;
+      color: white;
+    }
 
-    /* GRILLE DYNAMIQUE */
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 25px;
+      font-weight: 600;
+      opacity: 0.6;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover, .active {
+      opacity: 1;
+      color: var(--accent) !important;
+    }
+
+    /* GRILLE DE FILMS */
     .content-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 30px;
       width: 90%;
-      max-width: 1200px;
-      padding: 50px 0;
+      max-width: 1300px;
+      padding: 40px 0;
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 15px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: var(--card-bg);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(10px);
-      transition: 0.4s;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       cursor: pointer;
+      position: relative;
     }
 
-    .card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3); }
+    .card:hover {
+      transform: translateY(-10px) scale(1.02);
+      border-color: var(--neon);
+      box-shadow: 0 15px 35px rgba(168, 85, 247, 0.2);
+    }
 
-    .poster { width: 100%; height: 280px; background: #1e293b; }
-    .poster img { width: 100%; height: 100%; object-fit: cover; }
+    .poster {
+      width: 100%;
+      height: 320px;
+      background: #0b1220;
+      position: relative;
+    }
 
-    .info { padding: 15px; }
-    .info h3 { margin: 0; font-size: 16px; color: #fff; }
-    .info p { margin: 5px 0 0; font-size: 12px; color: var(--accent); }
-    
-    .status-tag { font-size: 9px; background: var(--neon); padding: 2px 6px; border-radius: 4px; margin-bottom: 5px; display: inline-block; font-weight: bold; }
+    .poster img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Badge Qualité */
+    .badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--accent);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .info { padding: 18px; }
+    .info h3 { margin: 0; font-size: 17px; font-weight: 700; color: #fff; }
+    .info p { margin: 6px 0 0; font-size: 13px; color: var(--accent); opacity: 0.8; }
+
+    /* Message si vide */
+    #empty-msg { text-align: center; grid-column: 1/-1; padding: 50px; opacity: 0.5; }
   </style>
 </head>
 <body>
@@ -86,95 +138,18 @@
     <div class="blob blob-2"></div>
   </div>
 
-  <div class="header">
-    <div class="site-title-mini">ZEBI</div>
-    <div class="nav-links">
+  <header class="header">
+    <a href="index.html" class="site-logo">ZEBI</a>
+    <nav class="nav-links">
       <a href="index.html">Accueil</a>
-      <a href="films.html" id="nav-films">Films</a>
-      <a href="series.html" id="nav-series">Séries</a>
-      <a href="animes.html" id="nav-animes">Animes</a>
-    </div>
-  </div>
+      <a href="films.html" class="active">Films</a>
+      <a href="series.html">Séries</a>
+      <a href="animes.html">Animes</a>
+    </nav>
+  </header>
 
   <div class="content-grid" id="movie-container">
     </div>
 
   <script>
-    // --- TA BASE DE DONNÉES INTÉGRÉE ---
-    const database = [
-      {
-        "id": 1,
-        "titre": "Inception",
-        "categorie": "films",
-        "genre": "Sci-Fi",
-        "image": "https://image.tmdb.org/t/p/w500/edvWebSYznCgh4oWubvWgRUD9S3.jpg",
-        "lien": "player.html?video=URL_FILM_1"
-      },
-      {
-        "id": 2,
-        "titre": "Solo Leveling",
-        "categorie": "animes",
-        "genre": "Action / Fantasy",
-        "image": "https://image.tmdb.org/t/p/w500/86699cs9V9pOHAdtYfSt9X6vV5U.jpg",
-        "lien": "player.html?video=URL_ANIME_1"
-      },
-      {
-        "id": 3,
-        "titre": "The Last of Us",
-        "categorie": "series",
-        "genre": "Drame",
-        "image": "https://image.tmdb.org/t/p/w500/uKvH6I00m767Xv7Pbe79pLq9zMT.jpg",
-        "lien": "player.html?video=URL_SERIE_1"
-      },
-      {
-        "id": 4,
-        "titre": "Spider-Man",
-        "categorie": "films",
-        "genre": "Action",
-        "image": "https://image.tmdb.org/t/p/w500/8VtW9797Xp7jqUvsq4zSbsbtxvL.jpg",
-        "lien": "player.html?video=URL_FILM_2"
-      }
-    ];
-
-    function chargerContenu() {
-        const container = document.getElementById('movie-container');
-        
-        // On récupère le nom du fichier actuel (ex: films.html)
-        const path = window.location.pathname.split("/").pop() || "films.html";
-        const categorieCible = path.replace(".html", ""); 
-        
-        // On met en gras le menu correspondant
-        const navLink = document.getElementById('nav-' + categorieCible);
-        if(navLink) navLink.classList.add('active');
-
-        // On filtre la base de données pour ne garder que la catégorie de la page
-        const resultats = database.filter(item => item.categorie === categorieCible);
-
-        if (resultats.length === 0) {
-          container.innerHTML = "<p style='grid-column: 1/-1; text-align: center; opacity: 0.5;'>Aucun contenu disponible pour le moment.</p>";
-          return;
-        }
-
-        // On génère les cartes
-        container.innerHTML = "";
-        resultats.forEach(item => {
-          container.innerHTML += `
-            <div class="card" onclick="window.location.href='${item.lien}'">
-              <div class="poster">
-                <img src="${item.image}" alt="${item.titre}">
-              </div>
-              <div class="info">
-                <span class="status-tag">4K ULTRA HD</span>
-                <h3>${item.titre}</h3>
-                <p>${item.genre}</p>
-              </div>
-            </div>
-          `;
-        });
-    }
-
-    // Lancement au chargement
-    window.onload = chargerContenu;
-  </script>
-</body>
-</html>
+    // --- TA

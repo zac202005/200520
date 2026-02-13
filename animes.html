@@ -100,30 +100,64 @@
     </div>
 
   <script>
-    async function chargerContenu() {
-      try {
-        const reponse = await fetch('data.json');
-        const data = await reponse.json();
+    // --- TA BASE DE DONNÉES INTÉGRÉE ---
+    const database = [
+      {
+        "id": 1,
+        "titre": "Inception",
+        "categorie": "films",
+        "genre": "Sci-Fi",
+        "image": "https://image.tmdb.org/t/p/w500/edvWebSYznCgh4oWubvWgRUD9S3.jpg",
+        "lien": "player.html?video=URL_FILM_1"
+      },
+      {
+        "id": 2,
+        "titre": "Solo Leveling",
+        "categorie": "animes",
+        "genre": "Action / Fantasy",
+        "image": "https://image.tmdb.org/t/p/w500/86699cs9V9pOHAdtYfSt9X6vV5U.jpg",
+        "lien": "player.html?video=URL_ANIME_1"
+      },
+      {
+        "id": 3,
+        "titre": "The Last of Us",
+        "categorie": "series",
+        "genre": "Drame",
+        "image": "https://image.tmdb.org/t/p/w500/uKvH6I00m767Xv7Pbe79pLq9zMT.jpg",
+        "lien": "player.html?video=URL_SERIE_1"
+      },
+      {
+        "id": 4,
+        "titre": "Spider-Man",
+        "categorie": "films",
+        "genre": "Action",
+        "image": "https://image.tmdb.org/t/p/w500/8VtW9797Xp7jqUvsq4zSbsbtxvL.jpg",
+        "lien": "player.html?video=URL_FILM_2"
+      }
+    ];
+
+    function chargerContenu() {
         const container = document.getElementById('movie-container');
         
-        // Détecter la catégorie via le nom du fichier
-        const path = window.location.pathname.split("/").pop();
-        const categorie = path.replace(".html", ""); 
+        // On récupère le nom du fichier actuel (ex: films.html)
+        const path = window.location.pathname.split("/").pop() || "films.html";
+        const categorieCible = path.replace(".html", ""); 
         
-        // Mettre en gras le lien actif dans le menu
-        const navLink = document.getElementById('nav-' + categorie);
+        // On met en gras le menu correspondant
+        const navLink = document.getElementById('nav-' + categorieCible);
         if(navLink) navLink.classList.add('active');
 
-        // Filtrer les films/series/animes
-        const items = data.filter(item => item.categorie === categorie);
+        // On filtre la base de données pour ne garder que la catégorie de la page
+        const resultats = database.filter(item => item.categorie === categorieCible);
 
-        if (items.length === 0) {
-          container.innerHTML = "<p>Bientôt disponible...</p>";
+        if (resultats.length === 0) {
+          container.innerHTML = "<p style='grid-column: 1/-1; text-align: center; opacity: 0.5;'>Aucun contenu disponible pour le moment.</p>";
           return;
         }
 
+        // On génère les cartes
         container.innerHTML = "";
-        items.forEach(item => {
+        resultats.forEach(item => {
           container.innerHTML += `
             <div class="card" onclick="window.location.href='${item.lien}'">
               <div class="poster">
@@ -137,11 +171,9 @@
             </div>
           `;
         });
-      } catch (e) {
-        console.error("Erreur de chargement:", e);
-      }
     }
 
+    // Lancement au chargement
     window.onload = chargerContenu;
   </script>
 </body>
